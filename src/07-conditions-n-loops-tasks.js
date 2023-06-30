@@ -271,8 +271,15 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const str = String(num);
+  const strToArr = str.split('');
+  const sumFunc = (num2) => num2.reduce((acc, curr) => Number(acc) + Number(curr), 0);
+  let sum = sumFunc(strToArr);
+  if (sum > 9) {
+    sum = getDigitalRoot(sum);
+  }
+  return sum;
 }
 
 
@@ -339,8 +346,24 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let res;
+  pathes.forEach((elem, idx) => {
+    const arr = elem.split('/');
+    if (pathes[idx + 1]) {
+      const secondArr = pathes[idx + 1].split('/');
+      res = arr.filter((el) => secondArr.indexOf(el) !== -1);
+      if (res.length !== 0) {
+        res = res.join('/');
+        res += '/';
+      } else if (elem[0] === '/' && pathes[idx + 1][0] === '/') {
+        res = '/';
+      } else {
+        res = '';
+      }
+    }
+  });
+  return res;
 }
 
 
