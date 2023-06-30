@@ -178,8 +178,8 @@ function getHead(arr, n) {
  *    [ 1, 3, 4, 5 ], 2  => [ 4, 5 ]
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'b', 'c', 'd' ]
  */
-function getTail(/* arr, n */) {
-  throw new Error('Not implemented');
+function getTail(arr, n) {
+  return arr.slice(-n);
 }
 
 
@@ -203,8 +203,8 @@ function getTail(/* arr, n */) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  return arr.map((elem) => elem.toString()).join('\n');
 }
 
 /**
@@ -237,8 +237,8 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  return arr.map((_, idx) => arr.slice(0, idx + 1).reduce((acc, curr) => acc + curr));
 }
 
 /**
@@ -253,7 +253,7 @@ function getMovingSum(/* arr */) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  return arr.filter((elem, idx) => idx % 2 !== 0);
+  return arr.filter((_, idx) => idx % 2 !== 0);
 }
 
 
@@ -544,8 +544,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map((elem) => childrenSelector(elem)).flat();
 }
 
 
@@ -586,8 +586,15 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const center = Math.round(arr.length / 2);
+  const head = arr.slice(0, Math.round((arr.length - 1) / 2));
+  const tail = arr.slice(center, arr.length);
+  if (arr.length % 2 === 0) {
+    return tail.concat(head);
+  }
+  const midNum = arr.slice(Math.round((arr.length - 1) / 2), center);
+  return tail.concat(midNum, head);
 }
 
 
